@@ -1,0 +1,30 @@
+name: Auto PR to cloud-repo
+
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install # or use yarn if you prefer
+
+      - name: Run script to create PR in cloud-repo
+        run: |
+          # Your script/command to create PR in repo2 goes here
+          # You can use GitHub CLI or REST API for this purpose
+          # Example using GitHub CLI:
+          gh pr create --base develop --head repo1:develop --title "Merge feature into repo2"
+
+      - name: Cleanup
+        run: rm -rf node_modules
